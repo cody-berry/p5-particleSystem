@@ -28,20 +28,27 @@ function setup() {
         [1,2,3,4,5] → no function
         z → freeze sketch</pre>`)
 
-    for (let i = 0; i < 10; i++) {
-        particles.push(new Particle(random(width), random(height)))
-    }
+    // for (let i = 0; i < 10; i++) {
+    //     particles.push(new Particle(random(width), random(height)))
+    // }
 }
 
 
 function draw() {
     background(234, 34, 24)
 
-    for (let p of particles) {
+    for (let i = particles.length - 1; i > -1; i--) {
+        let p = particles[i]
         p.show()
         p.update()
-        p.applyForce(new p5.Vector(0, 0.1))
+        p.applyForce(new p5.Vector(0, 9.8/frameRate()))
         p.edges()
+
+        if (p.finished()) {
+            // make sure to show the death animation!
+            p.deathAnimation()
+            particles.splice(i, 1)
+        }
     }
 
     displayDebugCorner()
