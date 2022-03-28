@@ -7,6 +7,9 @@
 let font
 let instructions
 
+// a list of particles
+let particles = []
+
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -24,13 +27,22 @@ function setup() {
     instructions.html(`<pre>
         [1,2,3,4,5] → no function
         z → freeze sketch</pre>`)
+
+    for (let i = 0; i < 10; i++) {
+        particles.push(new Particle(random(width), random(height)))
+    }
 }
 
 
 function draw() {
     background(234, 34, 24)
 
-
+    for (let p of particles) {
+        p.show()
+        p.update()
+        p.applyForce(new p5.Vector(0, 0.1))
+        p.edges()
+    }
 
     displayDebugCorner()
 }
@@ -45,7 +57,7 @@ function displayDebugCorner() {
     fill(0, 0, 100, 100) /* white */
     strokeWeight(0)
 
-    text(`frameCount: ${frameCount}`,
+    text(`particle list length: ${particles.length}`,
         LEFT_MARGIN, DEBUG_Y_OFFSET - LINE_HEIGHT)
     text(`frameRate: ${frameRate().toFixed(1)}`,
         LEFT_MARGIN, DEBUG_Y_OFFSET)
@@ -58,5 +70,9 @@ function keyPressed() {
         noLoop()
         instructions.html(`<pre>
             sketch stopped</pre>`)
+    }
+    /* add particle */
+    if (key === 'a') {
+        particles.push(new Particle(mouseX, mouseY))
     }
 }
