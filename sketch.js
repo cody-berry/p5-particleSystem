@@ -27,10 +27,6 @@ function setup() {
     instructions.html(`<pre>
         [1,2,3,4,5] → no function
         z → freeze sketch</pre>`)
-
-    // for (let i = 0; i < 10; i++) {
-    //     particles.push(new Particle(random(width), random(height)))
-    // }
 }
 
 
@@ -79,7 +75,20 @@ function keyPressed() {
             sketch stopped</pre>`)
     }
     /* add particle */
-    if (key === 'a') {
+    if (key === 'p') {
         particles.push(new Particle(mouseX, mouseY))
+    }
+    /* add confetti */
+    if (key === 'c') {
+        particles.push(new Confetti(mouseX, mouseY))
+    }
+    /* reset */
+    if (key === 'r') {
+        particles = []
+        for (let i = 0; i < 10; i++) {
+            particles.push(new Particle(random(width), random(height)))
+        } for (let i = 0; i < 10; i++) {
+            particles.push(new Confetti(random(width), random(height)))
+        }
     }
 }
