@@ -35,8 +35,8 @@ function draw() {
 
     for (let i = particles.length - 1; i > -1; i--) {
         let p = particles[i]
-        p.show()
         p.update()
+        p.show()
         p.applyForce(new p5.Vector(0, 9.8/frameRate()))
         p.edges()
 
@@ -90,9 +90,19 @@ function keyPressed() {
     if (key === 'r') {
         particles = []
         for (let i = 0; i < 10; i++) {
-            // particles.push(new Particle(random(width), random(height)))
-        // } for (let i = 0; i < 10; i++) {
-            // particles.push(new Confetti(random(width), random(height)))
+            particles.push(new Particle(random(width), random(height)))
+        } for (let i = 0; i < 10; i++) {
+            particles.push(new Confetti(random(width), random(height)))
+        } for (let i = 0; i < 10; i++) {
+            particles.push(new Tissue(random(width), random(height)))
+        }
+    }
+    /* add reset state */
+    if (key === 'a') {
+        for (let i = 0; i < 10; i++) {
+            particles.push(new Particle(random(width), random(height)))
+        } for (let i = 0; i < 10; i++) {
+            particles.push(new Confetti(random(width), random(height)))
         } for (let i = 0; i < 10; i++) {
             particles.push(new Tissue(random(width), random(height)))
         }
