@@ -8,6 +8,9 @@ class Tissue extends Confetti {
         this.yAngle = 0
         this.sine = 0
         this.startMillis = millis()
+
+        // the offset
+        this.offset = random(1000)
     }
 
     show() {
@@ -56,7 +59,7 @@ class Tissue extends Confetti {
         this.vel.add(this.acc)
         this.vel.limit(1)
         this.pos.add(this.vel)
-        this.sine = sin(radians(millis() - this.startMillis)/3)*this.initialVelocity
+        this.sine = sin(radians(millis() - this.startMillis + this.offset)/3)*this.initialVelocity*10
         this.posTemp = new p5.Vector(this.pos.x + this.sine, this.pos.y)
         this.acc = new p5.Vector(0, 0)
         this.lifetime -= random(1)
