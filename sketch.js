@@ -82,13 +82,19 @@ function keyPressed() {
     if (key === 'c') {
         particles.push(new Confetti(mouseX, mouseY))
     }
+    /* add tissue */
+    if (key === 't') {
+        particles.push(new Tissue(mouseX, mouseY))
+    }
     /* reset */
     if (key === 'r') {
         particles = []
         for (let i = 0; i < 10; i++) {
-            particles.push(new Particle(random(width), random(height)))
+            // particles.push(new Particle(random(width), random(height)))
+        // } for (let i = 0; i < 10; i++) {
+            // particles.push(new Confetti(random(width), random(height)))
         } for (let i = 0; i < 10; i++) {
-            particles.push(new Confetti(random(width), random(height)))
+            particles.push(new Tissue(random(width), random(height)))
         }
     }
 }
