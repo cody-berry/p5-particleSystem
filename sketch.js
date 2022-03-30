@@ -7,9 +7,8 @@
 let font
 let instructions
 
-// a list of particles
-let particles = []
-
+// our emitter
+let emitter
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -27,25 +26,19 @@ function setup() {
     instructions.html(`<pre>
         [1,2,3,4,5] → no function
         z → freeze sketch</pre>`)
+
+    emitter = new Emitter(mouseX, mouseY, [])
+
+    noCursor()
 }
 
 
 function draw() {
     background(234, 34, 24)
 
-    for (let i = particles.length - 1; i > -1; i--) {
-        let p = particles[i]
-        p.update()
-        p.show()
-        p.applyForce(new p5.Vector(0, 9.8/frameRate()))
-        p.edges()
-
-        if (p.finished()) {
-            // make sure to show the death animation!
-            p.deathAnimation()
-            particles.splice(i, 1)
-        }
-    }
+    emitter.pos = new p5.Vector(mouseX, mouseY)
+    emitter.show()
+    emitter.update()
 
     displayDebugCorner()
 }
@@ -60,7 +53,7 @@ function displayDebugCorner() {
     fill(0, 0, 100, 100) /* white */
     strokeWeight(0)
 
-    text(`particle list length: ${particles.length}`,
+    text(`particle list length: ${emitter.particles.length}`,
         LEFT_MARGIN, DEBUG_Y_OFFSET - LINE_HEIGHT)
     text(`frameRate: ${frameRate().toFixed(1)}`,
         LEFT_MARGIN, DEBUG_Y_OFFSET)
@@ -76,35 +69,27 @@ function keyPressed() {
     }
     /* add particle */
     if (key === 'p') {
-        particles.push(new Particle(mouseX, mouseY))
+        emitter.emit('p', 10)
     }
     /* add confetti */
     if (key === 'c') {
-        particles.push(new Confetti(mouseX, mouseY))
+        emitter.emit('c', 10)
     }
     /* add tissue */
     if (key === 't') {
-        particles.push(new Tissue(mouseX, mouseY))
+        emitter.emit('t', 10)
     }
     /* reset */
     if (key === 'r') {
-        particles = []
-        for (let i = 0; i < 10; i++) {
-            particles.push(new Particle(random(width), random(height)))
-        } for (let i = 0; i < 10; i++) {
-            particles.push(new Confetti(random(width), random(height)))
-        } for (let i = 0; i < 10; i++) {
-            particles.push(new Tissue(random(width), random(height)))
-        }
+        emitter.particles = []
+        emitter.emit('p', 10)
+        emitter.emit('c', 10)
+        emitter.emit('t', 10)
     }
     /* add reset state */
     if (key === 'a') {
-        for (let i = 0; i < 10; i++) {
-            particles.push(new Particle(random(width), random(height)))
-        } for (let i = 0; i < 10; i++) {
-            particles.push(new Confetti(random(width), random(height)))
-        } for (let i = 0; i < 10; i++) {
-            particles.push(new Tissue(random(width), random(height)))
-        }
+        emitter.emit('p', 10)
+        emitter.emit('c', 10)
+        emitter.emit('t', 10)
     }
 }
